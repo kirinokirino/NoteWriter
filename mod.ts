@@ -5,11 +5,26 @@ import {
   responseTimeLogger,
   setCorsHeaders,
 } from "./middleware.ts";
-import { allowVerbs, helloWorld } from "./controllers.ts";
+import {
+  aboutPage,
+  allowVerbs,
+  deleteNote,
+  getAllNotes,
+  getNote,
+  postNote,
+  updateNote,
+} from "./controllers.ts";
 
 const router = new Router();
-router.get("/hello", helloWorld)
-  .options("/hello", allowVerbs("GET"));
+router.get("/about", aboutPage)
+  .options("/about", allowVerbs("GET"))
+  .get("/notes", getAllNotes)
+  .post("/notes", postNote)
+  .options("/notes", allowVerbs("GET, POST"))
+  .get("/notes/:id", getNote)
+  .put("/notes/:id", updateNote)
+  .delete("/notes/:id", deleteNote)
+  .options("/notes/:id", allowVerbs("GET, PUT, DELETE"));
 
 const app = new Application();
 const port = 8080;
