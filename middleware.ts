@@ -14,3 +14,12 @@ export const responseTimeLogger: Middleware = async function (ctx, next) {
   const responseTime = ctx.response.headers.get("X-Response-Time");
   log.info(`${ctx.request.method} ${ctx.request.url} - ${responseTime}`);
 };
+
+export const setCorsHeaders: Middleware = async function (ctx, next) {
+  ctx.response.headers.set("Access-Control-Allow-Origin", "*");
+  ctx.response.headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, PUT, OPTIONS, DELETE, POST",
+  );
+  await next();
+};
